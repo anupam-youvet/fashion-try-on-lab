@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -6,14 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Login = () => {
   const { toast } = useToast();
+  const { login } = useAuth();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       toast({
@@ -26,15 +27,11 @@ const Login = () => {
     
     setIsLoading(true);
     
-    // Simulate authentication
-    setTimeout(() => {
+    try {
+      await login(email, password);
+    } finally {
       setIsLoading(false);
-      toast({
-        title: "Success",
-        description: "You've successfully logged in.",
-      });
-      // In a real app, redirect to dashboard or studio
-    }, 1500);
+    }
   };
 
   return (

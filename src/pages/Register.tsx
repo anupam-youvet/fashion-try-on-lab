@@ -7,15 +7,18 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Register = () => {
   const { toast } = useToast();
+  const { register } = useAuth();
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [termsAccepted, setTermsAccepted] = React.useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !password) {
       toast({
@@ -25,18 +28,23 @@ const Register = () => {
       });
       return;
     }
+
+    if (!termsAccepted) {
+      toast({
+        title: "Error",
+        description: "You must accept the terms and conditions.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     setIsLoading(true);
     
-    // Simulate registration
-    setTimeout(() => {
+    try {
+      await register(name, email, password);
+    } finally {
       setIsLoading(false);
-      toast({
-        title: "Account created",
-        description: "Your account has been created successfully.",
-      });
-      // In a real app, redirect to login or dashboard
-    }, 1500);
+    }
   };
 
   return (
@@ -88,7 +96,11 @@ const Register = () => {
               </div>
               
               <div className="flex items-center space-x-2">
-                <Checkbox id="terms" />
+                <Checkbox 
+                  id="terms" 
+                  checked={termsAccepted}
+                  onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                />
                 <Label htmlFor="terms" className="text-sm">
                   I agree to the{" "}
                   <Link to="/terms" className="text-fashion-primary hover:text-fashion-primary-dark">
