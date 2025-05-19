@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 // Define user types
 interface User {
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   // Load user from localStorage on first render
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -56,38 +57,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated delay
+      const response = await axios.post(`${API_URL}/auth/login`, {
+        email,
+        password,
+      });
 
-      const storedUsersJSON = localStorage.getItem("registeredUsers");
-      const storedUsers: StoredUser[] = storedUsersJSON
-        ? JSON.parse(storedUsersJSON)
-        : [];
+      localStorage.setItem("user", JSON.stringify(response.data?.user));
+      localStorage.setItem("token", response.data?.token);
 
-      const matchedUser = storedUsers.find(
-        (u) => u.email === email && u.password === password
-      );
-
-      if (!matchedUser) {
-        toast({
-          title: "Login failed",
-          description: "Invalid email or password.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const sessionUser: User = {
-        id: matchedUser.id,
-        name: matchedUser.name,
-        email: matchedUser.email,
-      };
-
-      const mockToken = `mock-token-${Date.now()}`;
-      localStorage.setItem("user", JSON.stringify(sessionUser));
-      localStorage.setItem("token", mockToken);
-
-      setUser(sessionUser);
-      setToken(mockToken);
+      setUser(response.data?.user);
+      setToken(response.data?.token);
 
       toast({
         title: "Success",
@@ -98,7 +77,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Login failed. Please try again.",
+        description:
+          error?.response?.data?.msg || "Login failed. Please try again.",
         variant: "destructive",
       });
       console.error("Login error:", error);
@@ -111,46 +91,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = async (name: string, email: string, password: string) => {
     try {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulated delay
 
-      const storedUsersJSON = localStorage.getItem("registeredUsers");
-      const storedUsers: StoredUser[] = storedUsersJSON
-        ? JSON.parse(storedUsersJSON)
-        : [];
-
-      const alreadyExists = storedUsers.find((u) => u.email === email);
-
-      if (alreadyExists) {
-        toast({
-          title: "Registration failed",
-          description: "Email already registered.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      const newUser: StoredUser = {
-        id: `user-${Date.now()}`,
+      const response = await axios.post(`${API_URL}/auth/register`, {
         name,
         email,
         password,
-      };
+      });
+      localStorage.setItem("user", JSON.stringify(response.data?.user));
+      localStorage.setItem("token", response.data?.token);
 
-      storedUsers.push(newUser);
-      localStorage.setItem("registeredUsers", JSON.stringify(storedUsers));
-
-      const sessionUser: User = {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-      };
-
-      const mockToken = `mock-token-${Date.now()}`;
-      localStorage.setItem("user", JSON.stringify(sessionUser));
-      localStorage.setItem("token", mockToken);
-
-      setUser(sessionUser);
-      setToken(mockToken);
+      setUser(response.data?.user);
+      setToken(response.data?.token);
 
       toast({
         title: "Account created",
@@ -161,7 +112,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Registration failed. Please try again.",
+        description:
+          error?.response?.data?.msg ||
+          "Registration failed. Please try again.",
         variant: "destructive",
       });
       console.error("Registration error:", error);
