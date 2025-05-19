@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -24,9 +31,9 @@ const Login = () => {
       });
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       await login(email, password);
     } finally {
@@ -39,7 +46,9 @@ const Login = () => {
       <div className="w-full max-w-md">
         <Card className="border-fashion-gray-200">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Sign In</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">
+              Sign In
+            </CardTitle>
             <CardDescription className="text-center">
               Enter your email and password to sign in to your account
             </CardDescription>
@@ -48,10 +57,10 @@ const Login = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="name@example.com" 
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -60,29 +69,32 @@ const Login = () => {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <Link to="/forgot-password" className="text-sm text-fashion-primary hover:text-fashion-primary-dark">
+                  {/* <Link
+                    to="/forgot-password"
+                    className="text-sm text-fashion-primary hover:text-fashion-primary-dark"
+                  >
                     Forgot password?
-                  </Link>
+                  </Link> */}
                 </div>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  placeholder="••••••••" 
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
               </div>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-fashion-primary hover:bg-fashion-primary-dark"
                 disabled={isLoading}
               >
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
             </form>
-            
-            <div className="relative">
+
+            {/* <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-fashion-gray-300" />
               </div>
@@ -109,12 +121,15 @@ const Login = () => {
                 </svg>
                 Facebook
               </Button>
-            </div>
+            </div> */}
           </CardContent>
           <CardFooter>
             <p className="text-center text-fashion-gray-600 text-sm mt-2 w-full">
-              Don't have an account?{' '}
-              <Link to="/register" className="text-fashion-primary hover:text-fashion-primary-dark font-semibold">
+              Don't have an account?{" "}
+              <Link
+                to="/register"
+                className="text-fashion-primary hover:text-fashion-primary-dark font-semibold"
+              >
                 Sign up
               </Link>
             </p>

@@ -1,10 +1,16 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
@@ -37,9 +43,9 @@ const Register = () => {
       });
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       await register(name, email, password);
     } finally {
@@ -52,7 +58,9 @@ const Register = () => {
       <div className="w-full max-w-md">
         <Card className="border-fashion-gray-200">
           <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl font-bold text-center">Create an account</CardTitle>
+            <CardTitle className="text-2xl font-bold text-center">
+              Create an account
+            </CardTitle>
             <CardDescription className="text-center">
               Enter your information to create your Fashion Studio account
             </CardDescription>
@@ -61,9 +69,9 @@ const Register = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input 
-                  id="name" 
-                  placeholder="John Doe" 
+                <Input
+                  id="name"
+                  placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
@@ -71,10 +79,10 @@ const Register = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input 
-                  id="email" 
-                  type="email" 
-                  placeholder="name@example.com" 
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -82,10 +90,10 @@ const Register = () => {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input 
-                  id="password" 
-                  type="password" 
-                  placeholder="Create a password" 
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Create a password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -94,34 +102,42 @@ const Register = () => {
                   Password must be at least 8 characters and include a number
                 </p>
               </div>
-              
+
               <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="terms" 
+                <Checkbox
+                  id="terms"
                   checked={termsAccepted}
-                  onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                  onCheckedChange={(checked) =>
+                    setTermsAccepted(checked as boolean)
+                  }
                 />
                 <Label htmlFor="terms" className="text-sm">
                   I agree to the{" "}
-                  <Link to="/terms" className="text-fashion-primary hover:text-fashion-primary-dark">
+                  <Link
+                    to="/terms"
+                    className="text-fashion-primary hover:text-fashion-primary-dark"
+                  >
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link to="/privacy" className="text-fashion-primary hover:text-fashion-primary-dark">
+                  <Link
+                    to="/privacy"
+                    className="text-fashion-primary hover:text-fashion-primary-dark"
+                  >
                     Privacy Policy
                   </Link>
                 </Label>
               </div>
-              
-              <Button 
-                type="submit" 
+
+              <Button
+                type="submit"
                 className="w-full bg-fashion-primary hover:bg-fashion-primary-dark"
                 disabled={isLoading}
               >
                 {isLoading ? "Creating account..." : "Create Account"}
               </Button>
             </form>
-            
+            {/*             
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-fashion-gray-300" />
@@ -149,12 +165,15 @@ const Register = () => {
                 </svg>
                 Facebook
               </Button>
-            </div>
+            </div> */}
           </CardContent>
           <CardFooter>
             <p className="text-center text-fashion-gray-600 text-sm mt-2 w-full">
-              Already have an account?{' '}
-              <Link to="/login" className="text-fashion-primary hover:text-fashion-primary-dark font-semibold">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="text-fashion-primary hover:text-fashion-primary-dark font-semibold"
+              >
                 Sign in
               </Link>
             </p>
