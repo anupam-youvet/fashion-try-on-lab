@@ -1,57 +1,65 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const Gallery = () => {
-  // Mock gallery items data
+  // State for filtering
+  const [activeCategory, setActiveCategory] = useState("All");
+  
+  // Mock gallery items data with actual images
   const galleryItems = [
     {
       id: 1,
       category: "Formal Wear",
-      beforeImage: "/placeholder.svg",
-      afterImage: "/placeholder.svg",
+      beforeImage: "/images/formal-before-1.jpg",
+      afterImage: "/images/formal-after-1.jpg",
       description: "Elegant black dress virtual try-on",
     },
     {
       id: 2,
       category: "Casual",
-      beforeImage: "/placeholder.svg",
-      afterImage: "/placeholder.svg",
+      beforeImage: "/images/casual-before-1.jpg",
+      afterImage: "/images/casual-after-1.jpg",
       description: "Casual t-shirt with jeans combination",
     },
     {
       id: 3,
       category: "Outerwear",
-      beforeImage: "/placeholder.svg",
-      afterImage: "/placeholder.svg",
+      beforeImage: "/images/outerwear-before-1.jpg",
+      afterImage: "/images/outerwear-after-1.jpg",
       description: "Winter coat on model",
     },
     {
       id: 4,
       category: "Athletic",
-      beforeImage: "/placeholder.svg",
-      afterImage: "/placeholder.svg",
+      beforeImage: "/images/athletic-before-1.jpg",
+      afterImage: "/images/athletic-after-1.jpg",
       description: "Sports wear try-on example",
     },
     {
       id: 5,
       category: "Formal Wear",
-      beforeImage: "/placeholder.svg",
-      afterImage: "/placeholder.svg",
+      beforeImage: "/images/formal-before-2.jpg",
+      afterImage: "/images/formal-after-2.jpg",
       description: "Business suit transformation",
     },
     {
       id: 6,
       category: "Casual",
-      beforeImage: "/placeholder.svg",
-      afterImage: "/placeholder.svg",
+      beforeImage: "/images/casual-before-2.jpg",
+      afterImage: "/images/casual-after-2.jpg",
       description: "Summer dress virtual try-on",
     },
   ];
 
   // Categories for filtering
   const categories = ["All", "Formal Wear", "Casual", "Outerwear", "Athletic"];
+  
+  // Filter items based on selected category
+  const filteredItems = activeCategory === "All" 
+    ? galleryItems 
+    : galleryItems.filter(item => item.category === activeCategory);
   
   return (
     <div className="pt-20 pb-16">
@@ -68,8 +76,11 @@ const Gallery = () => {
           {categories.map((category) => (
             <Button
               key={category}
-              variant="outline"
-              className="border-fashion-primary text-fashion-primary hover:bg-fashion-primary-light"
+              variant={activeCategory === category ? "default" : "outline"}
+              className={activeCategory === category 
+                ? "bg-fashion-primary text-white" 
+                : "border-fashion-primary text-fashion-primary hover:bg-fashion-primary-light"}
+              onClick={() => setActiveCategory(category)}
             >
               {category}
             </Button>
@@ -78,22 +89,36 @@ const Gallery = () => {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {galleryItems.map((item) => (
+          {filteredItems.map((item) => (
             <div key={item.id} className="card animate-fade-in">
               <div className="relative h-80">
-                <div className="absolute top-0 left-0 w-1/2 h-full bg-fashion-gray-200">
+                <div className="absolute top-0 left-0 w-1/2 h-full overflow-hidden">
                   <img 
                     src={item.beforeImage} 
                     alt={`Before - ${item.description}`}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }}
                   />
+                  <div className="absolute top-2 left-2 bg-black/70 text-white px-2 py-1 text-xs rounded">
+                    Before
+                  </div>
                 </div>
-                <div className="absolute top-0 right-0 w-1/2 h-full">
+                <div className="absolute top-0 right-0 w-1/2 h-full overflow-hidden">
                   <img 
                     src={item.afterImage} 
                     alt={`After - ${item.description}`}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }}
                   />
+                  <div className="absolute top-2 right-2 bg-fashion-primary/90 text-white px-2 py-1 text-xs rounded">
+                    After
+                  </div>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
                   <div className="text-white text-center">

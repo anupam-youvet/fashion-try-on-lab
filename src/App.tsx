@@ -10,6 +10,7 @@ import Footer from "@/components/Footer";
 import Home from "@/pages/Home";
 import Studio from "@/pages/Studio";
 import Gallery from "@/pages/Gallery";
+import Contact from "@/pages/Contact";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import NotFound from "@/pages/NotFound";
@@ -29,6 +30,7 @@ const App = () => (
               <Route path="/" element={<Home />} />
               <Route path="/studio" element={<Studio />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="*" element={<NotFound />} />

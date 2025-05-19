@@ -26,7 +26,7 @@ const Home = () => {
             </Button>
           </div>
         </div>
-        <div className="absolute inset-0 bg-[url('/placeholder.svg')] bg-cover bg-center opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('/images/hero-background.jpg')] bg-cover bg-center opacity-10"></div>
       </section>
 
       {/* How It Works Section */}
@@ -96,8 +96,28 @@ const Home = () => {
             {/* Example 1 */}
             <Card className="overflow-hidden">
               <div className="relative h-80">
-                <div className="absolute top-0 left-0 w-1/2 h-full bg-[url('/placeholder.svg')] bg-cover bg-center"></div>
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('/placeholder.svg')] bg-cover bg-center"></div>
+                <div className="absolute top-0 left-0 w-1/2 h-full">
+                  <img 
+                    src="/images/formal-before-1.jpg" 
+                    alt="Formal wear before try-on" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }} 
+                  />
+                </div>
+                <div className="absolute top-0 right-0 w-1/2 h-full">
+                  <img 
+                    src="/images/formal-after-1.jpg" 
+                    alt="Formal wear after try-on" 
+                    className="w-full h-full object-cover" 
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }}
+                  />
+                </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <ArrowRight size={40} className="text-white bg-fashion-primary rounded-full p-2" />
                 </div>
@@ -113,8 +133,28 @@ const Home = () => {
             {/* Example 2 */}
             <Card className="overflow-hidden">
               <div className="relative h-80">
-                <div className="absolute top-0 left-0 w-1/2 h-full bg-[url('/placeholder.svg')] bg-cover bg-center"></div>
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('/placeholder.svg')] bg-cover bg-center"></div>
+                <div className="absolute top-0 left-0 w-1/2 h-full">
+                  <img 
+                    src="/images/casual-before-1.jpg" 
+                    alt="Patterned clothes before try-on" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }} 
+                  />
+                </div>
+                <div className="absolute top-0 right-0 w-1/2 h-full">
+                  <img 
+                    src="/images/casual-after-1.jpg" 
+                    alt="Patterned clothes after try-on" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }} 
+                  />
+                </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <ArrowRight size={40} className="text-white bg-fashion-primary rounded-full p-2" />
                 </div>
@@ -130,8 +170,28 @@ const Home = () => {
             {/* Example 3 */}
             <Card className="overflow-hidden">
               <div className="relative h-80">
-                <div className="absolute top-0 left-0 w-1/2 h-full bg-[url('/placeholder.svg')] bg-cover bg-center"></div>
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-[url('/placeholder.svg')] bg-cover bg-center"></div>
+                <div className="absolute top-0 left-0 w-1/2 h-full">
+                  <img 
+                    src="/images/outerwear-before-1.jpg" 
+                    alt="Casual styles before try-on" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }} 
+                  />
+                </div>
+                <div className="absolute top-0 right-0 w-1/2 h-full">
+                  <img 
+                    src="/images/outerwear-after-1.jpg" 
+                    alt="Casual styles after try-on" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "/placeholder.svg"; 
+                      e.currentTarget.alt = "Image not available";
+                    }} 
+                  />
+                </div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <ArrowRight size={40} className="text-white bg-fashion-primary rounded-full p-2" />
                 </div>
