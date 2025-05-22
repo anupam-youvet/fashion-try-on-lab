@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
-import DropboxChooser from "./FilePicker";
 
 const Home = () => {
   return (
@@ -34,7 +33,6 @@ const Home = () => {
             >
               <Link to="/gallery">View Examples</Link>
             </Button>
-            <DropboxChooser />
           </div>
         </div>
         <div className="absolute inset-0 bg-[url('/images/hero-background.jpg')] bg-cover bg-center opacity-10"></div>
